@@ -60,7 +60,7 @@ company_project/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/company_project.git
+   git clone https://github.com/adityagoure/company_project.git
    ```
 
 2. **Move to your web server directory**
@@ -148,23 +148,10 @@ All API endpoints are in the `api/` directory and accept `action` as a query par
 ### Departments
 ![Departments](screenshots/departments.png)
 
-### Projects
-![Projects](screenshots/projects.png)
-
-### Assignments
-![Assignments](screenshots/assignments.png)
-
-### Dependents
-![Dependents](screenshots/dependents.png)
-
 ---
 
-## 📄 License
+## 👤 Author
 
-This project is open source and available under the [MIT License](LICENSE).
+**Aditya Goure** — [@adityagoure](https://github.com/adityagoure)
 
----
-
-## 👥 Authors
-
-**DBMS ABA Project** © 2026
+DBMS ABA Project © 2026
