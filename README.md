@@ -148,6 +148,15 @@ All API endpoints are in the `api/` directory and accept `action` as a query par
 ### Departments
 ![Departments](screenshots/departments.png)
 
+### Projects
+![Projects](screenshots/projects.png)
+
+### Assignments
+![Assignments](screenshots/assignments.png)
+
+### Dependents
+![Dependents](screenshots/dependents.png)
+
 ---
 
 ## 📄 License
