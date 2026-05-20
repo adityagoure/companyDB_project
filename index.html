@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CompanyDB — Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <h1>CompanyDB</h1>
+    <span>Management System</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-label">Main</div>
+    <a href="index.html" class="nav-link active">
+      <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      Dashboard
+    </a>
+    <div class="nav-label">Records</div>
+    <a href="employees.html" class="nav-link">
+      <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      Employees
+    </a>
+    <a href="departments.html" class="nav-link">
+      <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+      Departments
+    </a>
+    <a href="projects.html" class="nav-link">
+      <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+      Projects
+    </a>
+    <a href="works_on.html" class="nav-link">
+      <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      Assignments
+    </a>
+    <a href="dependents.html" class="nav-link">
+      <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+      Dependents
+    </a>
+  </nav>
+  <div class="sidebar-footer">DBMS ABA Project &copy; 2026</div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title">Good morning, <span>Admin</span> 👋</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag">Live Dashboard</div>
+    <h2>Company <span>Database</span><br/>Management</h2>
+    <p>Manage employees, departments, projects and assignments — all in one place. Built on MySQL with PHP backend.</p>
+  </div>
+
+  <div class="content">
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card purple fade-up">
+        <div class="stat-label">Total Employees</div>
+        <div class="stat-value" id="stat-emp">—</div>
+        <div class="stat-sub">Across all departments</div>
+      </div>
+      <div class="stat-card pink fade-up">
+        <div class="stat-label">Departments</div>
+        <div class="stat-value" id="stat-dept">—</div>
+        <div class="stat-sub">Active divisions</div>
+      </div>
+      <div class="stat-card green fade-up">
+        <div class="stat-label">Projects</div>
+        <div class="stat-value" id="stat-proj">—</div>
+        <div class="stat-sub">Ongoing projects</div>
+      </div>
+      <div class="stat-card blue fade-up">
+        <div class="stat-label">Dependents</div>
+        <div class="stat-value" id="stat-dep">—</div>
+        <div class="stat-sub">Registered family</div>
+      </div>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div class="section-header">
+      <div class="section-title">Quick Access</div>
+    </div>
+    <div class="quick-links">
+      <a href="employees.html" class="quick-card">
+        <div class="quick-icon purple">👥</div>
+        <div>
+          <h3>Employees</h3>
+          <p>View, add and manage employees</p>
+        </div>
+      </a>
+      <a href="departments.html" class="quick-card">
+        <div class="quick-icon pink">🏢</div>
+        <div>
+          <h3>Departments</h3>
+          <p>Manage company departments</p>
+        </div>
+      </a>
+      <a href="projects.html" class="quick-card">
+        <div class="quick-icon green">📋</div>
+        <div>
+          <h3>Projects</h3>
+          <p>Track all active projects</p>
+        </div>
+      </a>
+      <a href="works_on.html" class="quick-card">
+        <div class="quick-icon blue">⚡</div>
+        <div>
+          <h3>Assignments</h3>
+          <p>Assign employees to projects</p>
+        </div>
+      </a>
+      <a href="dependents.html" class="quick-card">
+        <div class="quick-icon amber">❤️</div>
+        <div>
+          <h3>Dependents</h3>
+          <p>Employee family records</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- RECENT EMPLOYEES TABLE -->
+    <div class="section-header">
+      <div class="section-title">Recent Employees</div>
+      <a href="employees.html" class="btn btn-primary btn-sm">View All</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>SSN</th>
+            <th>Department</th>
+            <th>Salary</th>
+            <th>Sex</th>
+          </tr>
+        </thead>
+        <tbody id="recent-table">
+          <tr><td colspan="5"><div class="empty"><div class="empty-icon">⏳</div><p>Loading...</p></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</main>
+
+<script>
+const API = 'api/';
+
+async function loadStats() {
+  try {
+    const [emps, depts, projs, deps] = await Promise.all([
+      fetch(API + 'employees.php?action=get_all').then(r => r.json()),
+      fetch(API + 'departments.php?action=get_all').then(r => r.json()),
+      fetch(API + 'projects.php?action=get_all').then(r => r.json()),
+      fetch(API + 'dependents.php?action=get_all').then(r => r.json())
+    ]);
+    document.getElementById('stat-emp').textContent  = emps.length;
+    document.getElementById('stat-dept').textContent = depts.length;
+    document.getElementById('stat-proj').textContent = projs.length;
+    document.getElementById('stat-dep').textContent  = deps.length;
+
+    const tbody = document.getElementById('recent-table');
+    if (emps.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5"><div class="empty"><div class="empty-icon">📭</div><p>No employees found</p></div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = emps.slice(0,5).map(e => `
+      <tr>
+        <td><strong>${e.fname} ${e.minit ? e.minit+'.' : ''} ${e.lname}</strong></td>
+        <td><span class="badge badge-purple">${e.ssn}</span></td>
+        <td>${e.dept_name || '—'}</td>
+        <td>$${Number(e.salary).toLocaleString()}</td>
+        <td>${e.sex === 'M' ? '♂ Male' : '♀ Female'}</td>
+      </tr>
+    `).join('');
+  } catch(err) {
+    console.error(err);
+  }
+}
+
+loadStats();
+</script>
+</body>
+</html>

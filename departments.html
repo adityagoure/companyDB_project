@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CompanyDB — Departments</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-logo"><h1>CompanyDB</h1><span>Management System</span></div>
+  <nav class="sidebar-nav">
+    <div class="nav-label">Main</div>
+    <a href="index.html" class="nav-link"><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>Dashboard</a>
+    <div class="nav-label">Records</div>
+    <a href="employees.html" class="nav-link"><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Employees</a>
+    <a href="departments.html" class="nav-link active"><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>Departments</a>
+    <a href="projects.html" class="nav-link"><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>Projects</a>
+    <a href="works_on.html" class="nav-link"><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>Assignments</a>
+    <a href="dependents.html" class="nav-link"><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>Dependents</a>
+  </nav>
+  <div class="sidebar-footer">DBMS ABA Project &copy; 2026</div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title">Departments</div>
+    <div class="topbar-actions">
+      <button class="btn btn-primary" onclick="openAddModal()">+ Add Department</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dept No</th>
+            <th>Department Name</th>
+            <th>Manager</th>
+            <th>Manager Since</th>
+            <th>Employees</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="dept-table">
+          <tr><td colspan="6"><div class="empty"><div class="empty-icon">⏳</div><p>Loading...</p></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!-- ADD/EDIT DEPARTMENT MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Add Department</div>
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="form-grid">
+      <input type="hidden" id="f-mode" value="add"/>
+      <div class="form-group">
+        <label>Dept Number</label>
+        <input type="number" id="f-number" placeholder="3"/>
+      </div>
+      <div class="form-group">
+        <label>Department Name</label>
+        <input type="text" id="f-name" placeholder="Research"/>
+      </div>
+      <div class="form-group">
+        <label>Manager SSN</label>
+        <input type="text" id="f-manager" placeholder="333445555"/>
+      </div>
+      <div class="form-group">
+        <label>Manager Start Date</label>
+        <input type="date" id="f-start"/>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveDept()">Save Department</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW EMPLOYEES IN DEPARTMENT MODAL -->
+<div class="modal-overlay" id="emp-modal">
+  <div class="modal" style="max-width:700px">
+    <div class="modal-title" id="emp-modal-title">Employees</div>
+    <button class="modal-close" onclick="closeEmpModal()">✕</button>
+
+    <div id="dept-info-strip" style="
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    "></div>
+
+    <div class="table-wrap" style="max-height:360px; overflow-y:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>SSN</th>
+            <th>Salary</th>
+            <th>Sex</th>
+            <th>Supervisor SSN</th>
+          </tr>
+        </thead>
+        <tbody id="dept-emp-list"></tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:16px; text-align:right">
+      <button class="btn btn-cancel" onclick="closeEmpModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<style>
+.info-item { display:flex; flex-direction:column; gap:3px; }
+.info-label { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); }
+.info-value { font-size:14px; font-weight:500; color:var(--text); }
+</style>
+
+<script>
+const API     = 'api/departments.php';
+const EMP_API = 'api/employees.php';
+let allDepts = [];
+let allEmployees = [];
+
+async function loadAll() {
+  const [dRes, eRes] = await Promise.all([
+    fetch(API     + '?action=get_all'),
+    fetch(EMP_API + '?action=get_all')
+  ]);
+  allDepts     = await dRes.json();
+  allEmployees = await eRes.json();
+  renderDepts();
+}
+
+function renderDepts() {
+  const tbody = document.getElementById('dept-table');
+  if (!allDepts.length) {
+    tbody.innerHTML = `<tr><td colspan="6"><div class="empty"><div class="empty-icon">📭</div><p>No departments found</p></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = allDepts.map(d => `
+    <tr>
+      <td><span class="badge badge-purple">#${d.dept_number}</span></td>
+      <td><strong>${d.dept_name}</strong></td>
+      <td>${d.fname ? d.fname + ' ' + d.lname : '—'}</td>
+      <td>${d.manager_start || '—'}</td>
+      <td>
+        <span class="badge badge-green"
+          style="cursor:pointer"
+          title="Click to view employees"
+          onclick="viewEmployees(${d.dept_number})">
+          👥 ${d.total_employees} employees
+        </span>
+      </td>
+      <td style="display:flex;gap:8px">
+        <button class="btn btn-edit btn-sm"   onclick='editDept(${JSON.stringify(d)})'>Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteDept('${d.dept_number}')">Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+/* ── VIEW EMPLOYEES ── */
+function viewEmployees(deptNum) {
+  const dept = allDepts.find(d => d.dept_number == deptNum);
+  const emps = allEmployees.filter(e => e.dept_number == deptNum);
+
+  document.getElementById('emp-modal-title').textContent =
+    `${dept.dept_name} — ${emps.length} Employee${emps.length !== 1 ? 's' : ''}`;
+
+  document.getElementById('dept-info-strip').innerHTML = `
+    <div class="info-item">
+      <span class="info-label">Department</span>
+      <span class="info-value">${dept.dept_name}</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Dept Number</span>
+      <span class="info-value">#${dept.dept_number}</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Manager</span>
+      <span class="info-value">${dept.fname ? dept.fname + ' ' + dept.lname : 'Not assigned'}</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Manager Since</span>
+      <span class="info-value">${dept.manager_start || '—'}</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Total Employees</span>
+      <span class="info-value" style="color:var(--accent3); font-family:'Syne',sans-serif; font-size:20px; font-weight:800">${emps.length}</span>
+    </div>
+  `;
+
+  const tbody = document.getElementById('dept-emp-list');
+  if (!emps.length) {
+    tbody.innerHTML = `<tr><td colspan="5"><div class="empty"><div class="empty-icon">👤</div><p>No employees in this department yet</p></div></td></tr>`;
+  } else {
+    tbody.innerHTML = emps.map(e => `
+      <tr>
+        <td><strong>${e.fname} ${e.minit ? e.minit+'.' : ''} ${e.lname}</strong></td>
+        <td><span class="badge badge-purple">${e.ssn}</span></td>
+        <td><span class="badge badge-green">$${Number(e.salary).toLocaleString()}</span></td>
+        <td>${e.sex === 'M' ? '♂ Male' : '♀ Female'}</td>
+        <td>${e.supervisor_ssn || '—'}</td>
+      </tr>
+    `).join('');
+  }
+
+  document.getElementById('emp-modal').classList.add('open');
+}
+
+function closeEmpModal() {
+  document.getElementById('emp-modal').classList.remove('open');
+}
+
+/* ── ADD / EDIT ── */
+function openAddModal() {
+  document.getElementById('modal-title').textContent = 'Add Department';
+  document.getElementById('f-mode').value = 'add';
+  document.getElementById('f-number').value = '';
+  document.getElementById('f-number').disabled = false;
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-manager').value = '';
+  document.getElementById('f-start').value = '';
+  document.getElementById('modal').classList.add('open');
+}
+
+function editDept(d) {
+  document.getElementById('modal-title').textContent = 'Edit Department';
+  document.getElementById('f-mode').value = 'edit';
+  document.getElementById('f-number').value = d.dept_number;
+  document.getElementById('f-number').disabled = true;
+  document.getElementById('f-name').value = d.dept_name;
+  document.getElementById('f-manager').value = d.manager_ssn || '';
+  document.getElementById('f-start').value = d.manager_start || '';
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+async function saveDept() {
+  const mode = document.getElementById('f-mode').value;
+  const fd = new FormData();
+  fd.append('dept_number',   document.getElementById('f-number').value);
+  fd.append('dept_name',     document.getElementById('f-name').value);
+  fd.append('manager_ssn',   document.getElementById('f-manager').value);
+  fd.append('manager_start', document.getElementById('f-start').value);
+  const action = mode === 'add' ? 'add' : 'update';
+  const res  = await fetch(API + '?action=' + action, { method: 'POST', body: fd });
+  const data = await res.json();
+  closeModal();
+  showToast(data.status === 'success' ? '✅ ' + data.message : '❌ ' + data.message, data.status);
+  loadAll();
+}
+
+async function deleteDept(num) {
+  if (!confirm('Delete this department?')) return;
+  const res  = await fetch(API + '?action=delete&dept_number=' + num);
+  const data = await res.json();
+  showToast(data.status === 'success' ? '✅ ' + data.message : '❌ ' + data.message, data.status);
+  loadAll();
+}
+
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type + ' show';
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+loadAll();
+</script>
+</body>
+</html>

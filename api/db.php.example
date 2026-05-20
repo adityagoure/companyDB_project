@@ -1,0 +1,32 @@
+<?php
+// ======================================================
+// DATABASE CONFIGURATION TEMPLATE
+// ======================================================
+// 1. Copy this file and rename it to: api/db.php
+// 2. Fill in your own database credentials below
+// 3. Never commit api/db.php to version control
+// ======================================================
+
+// Auto-detect environment: local or live
+if ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1') {
+    // ---- LOCAL (XAMPP) ----
+    $host     = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "company_db";
+    $port     = 3306; // Change to 3307 if your XAMPP MySQL runs on that port
+    $conn = mysqli_connect($host, $username, $password, $database, $port);
+} else {
+    // ---- LIVE (Your hosting provider) ----
+    $host     = "YOUR_HOST";
+    $username = "YOUR_USERNAME";
+    $password = "YOUR_PASSWORD";
+    $database = "YOUR_DATABASE";
+    $conn = mysqli_connect($host, $username, $password, $database);
+}
+
+if (!$conn) {
+    http_response_code(500);
+    die(json_encode(["error" => "Connection failed: " . mysqli_connect_error()]));
+}
+?>

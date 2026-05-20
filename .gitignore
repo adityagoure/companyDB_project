@@ -1,0 +1,15 @@
+# === OS generated files ===
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# === IDE / Editor files ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# === Sensitive credentials ===
+# Never push database config with real passwords
+api/db.php

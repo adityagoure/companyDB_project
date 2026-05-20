@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CompanyDB — Assignments</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-logo"><h1>CompanyDB</h1><span>Management System</span></div>
+  <nav class="sidebar-nav">
+    <div class="nav-label">Main</div>
+    <a href="index.html" class="nav-link"><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>Dashboard</a>
+    <div class="nav-label">Records</div>
+    <a href="employees.html" class="nav-link"><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Employees</a>
+    <a href="departments.html" class="nav-link"><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>Departments</a>
+    <a href="projects.html" class="nav-link"><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>Projects</a>
+    <a href="works_on.html" class="nav-link active"><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>Assignments</a>
+    <a href="dependents.html" class="nav-link"><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>Dependents</a>
+  </nav>
+  <div class="sidebar-footer">DBMS ABA Project &copy; 2026</div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title">Assignments</div>
+    <div class="topbar-actions">
+      <button class="btn btn-primary" onclick="openModal()">+ Assign Employee</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Employee</th><th>SSN</th><th>Project</th><th>Hours / Week</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="works-table">
+          <tr><td colspan="5"><div class="empty"><div class="empty-icon">⏳</div><p>Loading...</p></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-title">Assign Employee to Project</div>
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Employee</label>
+        <select id="f-emp"></select>
+      </div>
+      <div class="form-group full">
+        <label>Project</label>
+        <select id="f-proj"></select>
+      </div>
+      <div class="form-group full">
+        <label>Hours Per Week</label>
+        <input type="number" id="f-hours" placeholder="32.5" step="0.5"/>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveAssignment()">Save Assignment</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const API      = 'api/works_on.php';
+const EMP_API  = 'api/employees.php';
+const PROJ_API = 'api/projects.php';
+
+async function loadDropdowns() {
+  const [emps, projs] = await Promise.all([
+    fetch(EMP_API + '?action=get_all').then(r => r.json()),
+    fetch(PROJ_API + '?action=get_all').then(r => r.json())
+  ]);
+  document.getElementById('f-emp').innerHTML  = emps.map(e  => `<option value="${e.ssn}">${e.fname} ${e.lname} (${e.ssn})</option>`).join('');
+  document.getElementById('f-proj').innerHTML = projs.map(p => `<option value="${p.proj_number}">${p.proj_name}</option>`).join('');
+}
+
+async function loadAssignments() {
+  const res = await fetch(API + '?action=get_all');
+  const data = await res.json();
+  const tbody = document.getElementById('works-table');
+  if (!data.length) {
+    tbody.innerHTML = `<tr><td colspan="5"><div class="empty"><div class="empty-icon">📭</div><p>No assignments found</p></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = data.map(w => `
+    <tr>
+      <td><strong>${w.fname} ${w.lname}</strong></td>
+      <td><span class="badge badge-purple">${w.emp_ssn}</span></td>
+      <td><span class="badge badge-pink">${w.proj_name}</span></td>
+      <td><span class="badge badge-green">${w.hours} hrs</span></td>
+      <td>
+        <button class="btn btn-danger btn-sm" onclick="deleteAssignment('${w.emp_ssn}','${w.proj_number}')">Remove</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function openModal() {
+  document.getElementById('f-hours').value = '';
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+async function saveAssignment() {
+  const fd = new FormData();
+  fd.append('emp_ssn',     document.getElementById('f-emp').value);
+  fd.append('proj_number', document.getElementById('f-proj').value);
+  fd.append('hours',       document.getElementById('f-hours').value);
+  const res = await fetch(API + '?action=add', { method: 'POST', body: fd });
+  const data = await res.json();
+  closeModal();
+  showToast(data.status === 'success' ? '✅ ' + data.message : '❌ ' + data.message, data.status);
+  loadAssignments();
+}
+
+async function deleteAssignment(ssn, proj) {
+  if (!confirm('Remove this assignment?')) return;
+  const res = await fetch(`${API}?action=delete&emp_ssn=${ssn}&proj_number=${proj}`);
+  const data = await res.json();
+  showToast(data.status === 'success' ? '✅ ' + data.message : '❌ ' + data.message, data.status);
+  loadAssignments();
+}
+
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type + ' show';
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+loadDropdowns();
+loadAssignments();
+</script>
+</body>
+</html>
