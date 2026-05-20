@@ -139,7 +139,14 @@ All API endpoints are in the `api/` directory and accept `action` as a query par
 
 ## 📸 Screenshots
 
-> *Add screenshots of your dashboard here after deployment.*
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### Employees
+![Employees](screenshots/employees.png)
+
+### Departments
+![Departments](screenshots/departments.png)
 
 ---
 
